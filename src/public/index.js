@@ -4,6 +4,7 @@ const socket = io();
 const messages = document.getElementById('messages');
 const form = document.getElementById('form');
 const input = document.getElementById('input');
+const videoInput = document.getElementById('videoInput');
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -11,6 +12,18 @@ form.addEventListener('submit', function (e) {
     socket.emit('load video file', input.value);
     input.value = '';
   }
+});
+
+videoInput.addEventListener('change', function (event) {
+  const video = event.target.files[0];
+
+  const reader = new FileReader();
+  reader.readAsArrayBuffer(video);
+  reader.onload = (event) => {
+    videoBuffer = event.target.result;
+
+    socket.emit('add video file', videoBuffer);
+  };
 });
 
 socket.on('send video file', function (videoBuffer, videoMime = 'video/mp4') {

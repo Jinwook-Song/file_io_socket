@@ -7,7 +7,9 @@ import { Server } from 'socket.io';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  maxHttpBufferSize: 1e8, // 100 MB
+});
 
 const port = 3000;
 
@@ -40,6 +42,7 @@ io.on('connection', (socket) => {
       );
       try {
         const videoBuffer = fs.readFileSync(videoPath);
+        console.log(videoBuffer);
         const videoMime = mime.getType(videoPath);
         io.emit('send video file', videoBuffer, videoMime); // emit event to everyone
       } catch (error) {
@@ -47,6 +50,12 @@ io.on('connection', (socket) => {
       }
     }
   );
+
+  socket.on('add video file', (video) => {
+    console.log('server:', video);
+    const videoBuffer = Buffer.from(video);
+    io.emit('send video file', videoBuffer);
+  });
 });
 
 server.listen(port, () => {
