@@ -8,14 +8,20 @@ const input = document.getElementById('input');
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   if (input.value) {
-    socket.emit('chat message', input.value);
+    socket.emit('load video file', input.value);
     input.value = '';
   }
 });
 
-socket.on('chat message', function (msg) {
-  const item = document.createElement('li');
-  item.textContent = msg;
-  messages.appendChild(item);
+socket.on('send video file', function (videoBuffer, videoMime = 'video/mp4') {
+  const videoBlob = new Blob([videoBuffer], { type: videoMime });
+  const videoUrl = URL.createObjectURL(videoBlob);
+  const video = document.createElement('video');
+  video.controls = true;
+  video.width = 320;
+  video.height = 180;
+
+  video.src = videoUrl;
+  messages.appendChild(video);
   window.scrollTo(0, document.body.scrollHeight);
 });

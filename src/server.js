@@ -1,5 +1,8 @@
 import express from 'express';
 import http from 'http';
+import path from 'path';
+import fs from 'fs';
+import mime from 'mime';
 import { Server } from 'socket.io';
 
 const app = express();
@@ -23,11 +26,27 @@ io.on('connection', (socket) => {
     console.log('🚀 user disconnected:', id);
   });
 
-  // chat message
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg); // emit event to everyone
-  });
+  //
+  socket.on(
+    'load video file',
+    (fileName = '소방시연용_Remote_mov_201103_lite') => {
+      console.log('video file name: ' + fileName);
+
+      // video
+      const videoPath = path.join(
+        __dirname,
+        '..',
+        `assets/videos/${fileName}.mp4`
+      );
+      try {
+        const videoBuffer = fs.readFileSync(videoPath);
+        const videoMime = mime.getType(videoPath);
+        io.emit('send video file', videoBuffer, videoMime); // emit event to everyone
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  );
 });
 
 server.listen(port, () => {

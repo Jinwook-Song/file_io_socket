@@ -1,14 +1,14 @@
 {
-  "name": "socket-practice-2021",
+  "name": "file_io_socket",
   "version": "1.0.0",
   "description": "Practice Socket.io",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jinwook-Song/socket-practice-2021.git"
+    "url": "git+https://github.com/Jinwook-Song/file_io_socket.git"
   },
   "keywords": [
     "socket.io"
@@ -16,11 +16,13 @@
   "author": "jinwook song <wlsdnr129@naver.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Jinwook-Song/socket-practice-2021/issues"
+    "url": "https://github.com/Jinwook-Song/file_io_socket/issues"
   },
-  "homepage": "https://github.com/Jinwook-Song/socket-practice-2021#readme",
+  "homepage": "https://github.com/Jinwook-Song/file_io_socket#readme",
   "dependencies": {
     "express": "^4.17.2",
+    "fs": "^0.0.1-security",
+    "mime": "^3.0.0",
     "socket.io": "^4.4.0"
   },
   "devDependencies": {
