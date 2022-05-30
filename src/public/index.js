@@ -16,13 +16,14 @@ form.addEventListener('submit', function (e) {
 
 videoInput.addEventListener('change', function (event) {
   const video = event.target.files[0];
+  const videoName = video.name;
 
   const reader = new FileReader();
   reader.readAsArrayBuffer(video);
   reader.onload = (event) => {
     videoBuffer = event.target.result;
 
-    socket.emit('add video file', videoBuffer);
+    socket.emit('add video file', videoBuffer, videoName);
   };
 });
 

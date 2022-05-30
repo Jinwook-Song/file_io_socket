@@ -51,9 +51,10 @@ io.on('connection', (socket) => {
     }
   );
 
-  socket.on('add video file', (video) => {
-    console.log('server:', video);
-    const videoBuffer = Buffer.from(video);
+  socket.on('add video file', (videoFile, videoName) => {
+    const videoBuffer = Buffer.from(videoFile);
+    const videoPath = path.join(__dirname, '..', `assets/videos/${videoName}`);
+    fs.writeFileSync(videoPath, videoBuffer);
     io.emit('send video file', videoBuffer);
   });
 });
