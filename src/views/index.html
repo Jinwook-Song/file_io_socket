@@ -9,10 +9,24 @@
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
-    <input id="videoInput" type="file" action="video/*" />
+    <input id="videoInput" type="file" accept="video/*" />
+    <input
+      id="imageInput"
+      type="file"
+      accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+    />
 
     <!-- Takes to load the socket.io-client, which exposes an io global (and the endpoint GET /socket.io/socket.io.js), and then connect. -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/static/index.js"></script>
   </body>
 </html>
+
+<!-- <div class="iframe-wrap">
+  <iframe
+    src="http://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(file) + '"
+    width="' + settings.width + '"
+    height="' + settings.height + '"
+    style="border: none"
+  ></iframe>
+</div> -->
